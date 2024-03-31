@@ -1,9 +1,9 @@
-name:  OpenWrt-合集版
+name: OpenWrt-合集版
 
-on: 
+on:
   workflow_dispatch:
   schedule:
-    - cron: 30 00 * * 5
+    - cron: '30 00 * * 5'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -25,6 +25,10 @@ jobs:
     - name: 检查项目分支
       uses: actions/checkout@main
 
+    # 在编译步骤之前加入 SSH 连接的步骤
+    - name: Setup tmate session for SSH connection
+      uses: tmate-io/tmate-action@v3
+
     - name: 清理磁盘空间
       uses: jlumbroso/free-disk-space@main
       with:
@@ -34,6 +38,8 @@ jobs:
         haskell: true
         large-packages: true
         swap-storage: true
+      
+    # ...之后的步骤保持不变
       
     - name: 查看机器配置
       run: |
